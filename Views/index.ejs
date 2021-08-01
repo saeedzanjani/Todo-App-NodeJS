@@ -1,0 +1,40 @@
+<%- include('./includes/header.ejs') %>
+
+<form method="POST" action="/add-todo">
+    <input type="text" class="form-control w-75 mx-auto my-2 text-center" name="text" placeholder="Add New Todo">
+    <input type="submit" class="btn btn-primary" value="Add Todo">
+</form>
+
+<% if(todos.length !== 'undefined') { %>
+    <p class="text-center"><span class="badge bg-success"><%= completedTodos %> </span></p>
+    <p class="text-center"><span class="badge bg-warning"><%= remainTodos %>  </span></p>
+    <% for(let todo of todos) { %>
+            <% if(!todo.completed){ %> 
+                <div
+                class="d-flex flex-row justify-content-around text-center alert w-75 mx-auto rounded-3 <%= todo.completed ?
+                        'alert-danger': 'alert-success'  %> "
+                >
+                    <a href="/completed-todo/<%= todo._id %> " 
+                        style="text-decoration: none;"
+                        >
+                            <h2><%= todo.text %> </h2></a>
+                            <span><a href="/deleted-todo/<%= todo._id %> " class="text-decoration-none">
+                                    <i class="fa fa-trash text-danger fa-2x" aria-hidden="true"></i>
+                                </a></span>
+                </div>
+                <% } else{ %> 
+                    <div
+                    class="d-flex flex-row justify-content-around text-center alert w-75 mx-auto rounded-3 <%= todo.completed ? 'alert-danger': 'alert-success'  %> ">
+                        <a href="/completed-todo/<%= todo._id %> " 
+                            style="display: block; text-decoration: line-through;"
+                            >
+                                <h2><%= todo.text %> </h2></a>
+                                <span><a href="/deleted-todo/<%= todo._id %> " class="text-danger text-decoration-none">
+                                      <i class="fa fa-trash text-danger fa-2x" aria-hidden="true"></i>
+                                    </a></span>
+                    </div>
+                    <% } %> 
+              
+        <% } %>  
+    <% } %>
+
